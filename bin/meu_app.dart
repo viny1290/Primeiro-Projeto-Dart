@@ -1,13 +1,12 @@
 import 'dart:io';
 
 void main() {
-  print("Digite o primeiro numero: ");
-  double numeroUm = double.parse(stdin.readLineSync()!);
-  print("Digite o segundo numero: ");
-  double numeroDois = double.parse(stdin.readLineSync()!);
+  double numeroUm = 0;
+  double numeroDois = 0;
+  String operacao = "";
+  String? entrada = "";
 
-  print("Digite a operação: ");
-  String operacao = stdin.readLineSync()!;
+  List<String> operacoes = <String>["+", "-", "*", "/"];
 
   void soma()
   {
@@ -29,20 +28,73 @@ void main() {
     print(numeroUm * numeroDois);
   }
 
-  switch (operacao) {
-    case "+":
-      soma();
-      break;
-    case "-":
-      subtracao();
-      break;
-    case "/":
-      divisao();
-      break;
-    case "*":
-      multiplicacao();
-      break;
-    default:
-    print("Não e uma Operação valida");
+  void calcular()
+  {
+    switch (operacao)
+    {
+      case "+":
+        print("O resultado da Operação é: ");
+        soma();
+        break;
+      case "-":
+        print("O resultado da Operação é: ");
+        subtracao();
+        break;
+      case "/":
+        print("O resultado da Operação é: ");
+        divisao();
+        break;
+      case "*":
+        print("O resultado da Operação é: ");
+        multiplicacao();
+        break;
+    }
   }
+
+  void getOperacao()
+  {
+    print("Digite uma Operação: ${operacoes.toString()}");
+    entrada = stdin.readLineSync();
+    if(entrada != null)
+    {
+      if(operacoes.contains(entrada))
+      {
+        operacao = entrada!;
+      }else
+      {
+        print("Operação invalida");
+        getOperacao();
+      }
+    }
+  }
+
+  double getNumero(String valor)
+  {
+    print("Digite o $valor numero: ");
+    entrada = stdin.readLineSync();
+    if(entrada != null)
+    {
+      var numero = double.tryParse(entrada!);
+
+      if(numero != null)
+      {
+        return double.parse(entrada!);
+      }else 
+      {
+        return 0;
+      }
+
+    }else 
+    {
+      return 0;
+    }
+  }
+
+  numeroUm = getNumero( "Primeiro");
+
+  getOperacao();
+
+  numeroDois = getNumero("Segundo");
+
+  calcular();
 }
